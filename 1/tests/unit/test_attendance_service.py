@@ -53,7 +53,7 @@ def test_create_first_student_repeat(
         attendance_service.create_student(id, FIO)
 
 
-def test_create_second_delivery(
+def test_create_second_student(
     second_student_data: tuple[UUID, str],
     attendance_service: AttendanceService
 ) -> None:
@@ -86,7 +86,7 @@ def test_set_lesson_status_error(
             first_student_data[0], lesson_repo.get_lessons()[0].id)
 
 
-def test_set_lesson_delivery_error(
+def test_set_lesson_lesson_error(
     attendance_service: AttendanceService,
     lesson_repo: LessonRepo
 ) -> None:

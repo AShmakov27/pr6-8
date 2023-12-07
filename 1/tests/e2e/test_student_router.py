@@ -69,13 +69,13 @@ def test_add_student_second_success(
     second_student_data: tuple[UUID, str, datetime]
 ) -> None:
     id, FIO = second_student_data
-    delivery = Student.model_validate(requests.post(f'{base_url}/student/add', json={
+    student = Student.model_validate(requests.post(f'{base_url}/student/add', json={
         'id': id.hex,
         'FIO': FIO
     }).json())
-    assert delivery.id == id
-    assert delivery.status == Statuses.ABSENT
-    assert delivery.FIO == FIO
+    assert student.id == id
+    assert student.status == Statuses.ABSENT
+    assert student.FIO == FIO
 
 
 def test_get_students_full(

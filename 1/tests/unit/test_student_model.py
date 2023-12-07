@@ -16,9 +16,9 @@ def test_student_creation(any_lesson: Lesson):
     id = uuid4()
     FIO = 'test'
     status = Statuses.ABSENT
-    delivery = Student(id=id, FIO=FIO, status=status, lesson_id=any_lesson)
+    student = Student(id=id, FIO=FIO, status=status, lesson_id=any_lesson)
 
-    assert dict(delivery) == {'id': id, 'FIO': FIO, 'status': status, 'lesson_id': any_lesson}
+    assert dict(student) == {'id': id, 'FIO': FIO, 'status': status, 'lesson_id': any_lesson}
 
 
 def test_student_fio_required(any_lesson: Lesson):

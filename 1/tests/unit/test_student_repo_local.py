@@ -50,10 +50,10 @@ def test_get_student_by_id_error() -> None:
 
 def test_add_second_student(first_student: Student, second_student: Student) -> None:
     assert student_test_repo.create_student(second_student) == second_student
-    deliveries = student_test_repo.get_students()
-    assert len(deliveries) == 2
-    assert deliveries[0] == first_student
-    assert deliveries[1] == second_student
+    students = student_test_repo.get_students()
+    assert len(students) == 2
+    assert students[0] == first_student
+    assert students[1] == second_student
 
 
 def test_set_status(first_student: Student) -> None:

@@ -13,7 +13,7 @@ def get_students(attendance_service: AttendanceService = Depends(AttendanceServi
     return attendance_service.get_students()
 
 @student_router.post('/add')
-def add_delivery(
+def add_student(
     student_info: CreateStudentRequest,
     attendance_service: AttendanceService = Depends(AttendanceService)
 ) -> Student:
@@ -24,7 +24,7 @@ def add_delivery(
         raise HTTPException(400, f'Student with id={student_info.id} already exists')
 
 @student_router.post('/{id}/attend')
-def attend_delivery(id: UUID, attendance_service: AttendanceService = Depends(AttendanceService)) -> Student:
+def attend_student(id: UUID, attendance_service: AttendanceService = Depends(AttendanceService)) -> Student:
     try:
         student = attendance_service.attend_student(id)
         return student.dict()
