@@ -1,0 +1,12 @@
+version: '3.9'
+
+services: 
+ attendance_service: 
+  build:
+    context: ./1
+    dockerfile: Dockerfile
+  ports: 
+    - 8080:80
+  environment: 
+    - POSTGRES_URL=postgresql://postgres:1234@192.168.84.131:5432/students_pr6
+    - AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/
