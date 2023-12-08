@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: ["master"]
   workflow_dispatch:
+    inputs:
+      job-to-run:
+        description: 'Выберите job для запуска'
+        required: true
 
 jobs:
 
@@ -37,14 +41,15 @@ jobs:
           POSTGRES_URL=$POSTGRES_URL
           " > ./1/.env
           sleep 5
+          cd ./1
           alembic upgrade head
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://postgres:password@localhost:5432/students_pr6
+          POSTGRES_URL: postgresql://postgres:1234@localhost:5432/students_pr6
 
       - name: Run integration tests
         run: |
-          pytest ./tests/integration
+          pytest ./1/tests/integration
 
 
   build-and-push-to-dh:
@@ -70,7 +75,6 @@ jobs:
 
   build-and-push-to-yc:
     name: Build and push to YandexCloud Registry
-    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
