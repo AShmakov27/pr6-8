@@ -8,7 +8,7 @@ from app.models.student import Student, Statuses
 
 
 time.sleep(5)
-base_url = 'https://bbahegk26lu45pksmgjo.containers.yandexcloud.net//api'
+base_url = 'https://bbahegk26lu45pksmgjo.containers.yandexcloud.net/api'
 
 
 @pytest.fixture(scope='session')
@@ -92,7 +92,7 @@ def test_set_lesson_status_error(
     assert result.status_code == 400
 
 
-def test_activate_delivery_success(
+def test_attend_student_success(
     second_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = second_student_data
