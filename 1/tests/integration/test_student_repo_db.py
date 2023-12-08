@@ -1,12 +1,9 @@
 import pytest
 from uuid import uuid4
-from time import sleep
 
 from app.models.student import Student, Statuses
 from app.repositories.db_student_repo import StudentRepo
 from app.repositories.local_lesson_repo import LessonRepo
-
-sleep(5)
 
 
 @pytest.fixture()
