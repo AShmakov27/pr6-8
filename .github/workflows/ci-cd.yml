@@ -31,15 +31,17 @@ jobs:
 
       - name: Prepare e2e tests
         run: |
-          docker compose up --build
-        env:
-          AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://secUREusER:StrongEnoughPassword)@51.250.26.59:5432/students_pr6
-          PORT: 80
+          sudo apt update
+          sudo apt install -y python3-pip
+          pip install -r ./1/requirements.txt
 
       - name: Run e2e tests
         run: |
           pytest ./1/tests/e2e
+        env:
+          AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
+          POSTGRES_URL: postgresql://secUREusER:StrongEnoughPassword)@51.250.26.59:5432/students_pr6
+          PORT: 80
 
   build-and-push-to-dh:
     name: Build and push to DockerHub
