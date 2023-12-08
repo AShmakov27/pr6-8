@@ -30,7 +30,7 @@ jobs:
           pytest ./1/tests/unit
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://secUREusER:StrongEnoughPassword)@51.250.26.59:5432/students_pr6
+          POSTGRES_URL: postgresql://postgres:1234@localhost:5432/students_pr6
           PORT: 80
 
       - name: Prepare integration tests
@@ -46,6 +46,7 @@ jobs:
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
           POSTGRES_URL: postgresql://postgres:1234@localhost:5432/students_pr6
+          PORT: 80
 
       - name: Run integration tests
         run: |
