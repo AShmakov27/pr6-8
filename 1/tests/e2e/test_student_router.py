@@ -8,7 +8,7 @@ from app.models.student import Student, Statuses
 
 
 time.sleep(5)
-base_url = 'https://bbahegk26lu45pksmgjo.containers.yandexcloud.net/api'
+base_url = 'http://localhost:8080/api'
 
 
 @pytest.fixture(scope='session')
