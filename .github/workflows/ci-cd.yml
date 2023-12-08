@@ -30,7 +30,6 @@ jobs:
 
       - name: Prepare e2e tests
         run: |
-          sudo docker stop pg-tests
           sudo docker build . --file ./1/Dockerfile --tag back-tests
           sudo docker run -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
           sleep 5
