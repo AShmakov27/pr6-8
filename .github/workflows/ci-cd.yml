@@ -31,10 +31,10 @@ jobs:
       - name: Prepare e2e tests
         run: |
           sudo docker run --name pg-tests -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
-          rm ./.env
+          rm ./1/.env
           echo "AMQP_URL=$AMQP_URL
           POSTGRES_URL=$POSTGRES_URL
-          " > ./1/env
+          " > ./1/.env
           sleep 5
           alembic upgrade head
           sudo docker stop pg-tests
