@@ -26,14 +26,16 @@ jobs:
           pytest ./1/tests/unit
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://postgres:1234@192.168.84.131:5432/students_pr6
+          POSTGRES_URL: postgresql://secUREusER:StrongEnoughPassword)@51.250.26.59:5432/students_pr6
+          PORT: 80
 
       - name: Prepare e2e tests
         run: |
           docker compose up --build
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://postgres:1234@192.168.84.131:5432/students_pr6
+          POSTGRES_URL: postgresql://secUREusER:StrongEnoughPassword)@51.250.26.59:5432/students_pr6
+          PORT: 80
 
       - name: Run e2e tests
         run: |
@@ -62,6 +64,7 @@ jobs:
 
   build-and-push-to-yc:
     name: Build and push to YandexCloud Registry
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
