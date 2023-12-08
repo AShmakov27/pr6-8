@@ -41,7 +41,7 @@ jobs:
       - name: Run e2e tests
         run: |
           pytest ./1/tests/e2e
-          
+
   build-and-push-to-dh:
     name: Build and push to DockerHub
     runs-on: ubuntu-latest
@@ -99,6 +99,6 @@ jobs:
           revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/attendance-service:latest
           revision-service-account-id: ${{ secrets.YC_SA_ID }}
           revision-env: |
-          AMQP_URL=${{ secrets.ENV_AMQP_URL }}
-          POSTGRES_URL=${{ secrets.ENV_POSTGRES_URL }}
+            AMQP_URL=${{ secrets.ENV_AMQP_URL }}
+            POSTGRES_URL=${{ secrets.ENV_POSTGRES_URL }}
     
