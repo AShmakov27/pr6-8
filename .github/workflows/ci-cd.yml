@@ -30,12 +30,7 @@ jobs:
 
       - name: Prepare e2e tests
         run: |
-          sudo docker build . --file ./1/Dockerfile --tag back-tests
-          sudo docker run -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
-          sleep 5
-          alembic upgrade head
-          sudo docker run -p 8000:80 -e AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/ -e POSTGRES_URL=postgresql://postgres:1234@192.168.84.131:5432/students_pr6 -e PORT=80 -d back-tests
-          sleep 5
+          sudo docker compose up --build
 
       - name: Run e2e tests
         run: |
