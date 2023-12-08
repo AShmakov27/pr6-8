@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: ["master"]
   workflow_dispatch:
-    inputs:
-      job-to-run:
-        description: 'Выберите job для запуска'
-        required: true
 
 jobs:
 
@@ -45,7 +41,7 @@ jobs:
           alembic upgrade head
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
-          POSTGRES_URL: postgresql://postgres:1234@localhost:5432/students_pr6
+          POSTGRES_URL: postgresql://postgres:password@localhost:5432/students_pr6
           PORT: 80
 
       - name: Run integration tests
