@@ -8,6 +8,37 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Prepare unit tests
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: |
+          pytest ./1/tests/unit
+
+      - name: Prepare e2e tests
+        run: |
+          sudo docker stop pg-tests
+          sudo docker build . --file Dockerfile --tag back-tests
+          sudo docker run -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres:14
+          sleep 5
+          alembic upgrade head
+          sudo docker run -p 8000:80 -e AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/ -e POSTGRES_URL=postgresql://postgres:1234@172.17.0.1:5432/postgres -e PORT=80 -d back-tests
+          sleep 5
+
+      - name: Run e2e tests
+        run: |
+          pytest ./1/tests/e2e
+
   build-and-push-to-dh:
     name: Build and push to DockerHub
     runs-on: ubuntu-latest
@@ -48,3 +79,4 @@ jobs:
       - name: Push tag YC Registry
         run: |
           docker push cr.yandex/${{ secrets.YC_REGISTRY_ID }}/mark-service:latest
+    

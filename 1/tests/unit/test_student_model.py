@@ -9,16 +9,16 @@ from app.models.student import Student, Statuses
 
 @pytest.fixture()
 def any_lesson() -> Lesson:
-    return Lesson(id=uuid4(), subject='delliveryman')
+    return Lesson(id=uuid4(), subject='lesson')
 
 
 def test_student_creation(any_lesson: Lesson):
     id = uuid4()
     FIO = 'test'
     status = Statuses.ABSENT
-    student = Student(id=id, FIO=FIO, status=status, lesson_id=any_lesson)
+    student = Student(id=id, FIO=FIO, status=status, lesson_id=any_lesson.id)
 
-    assert dict(student) == {'id': id, 'FIO': FIO, 'status': status, 'lesson_id': any_lesson}
+    assert dict(student) == {'id': id, 'FIO': FIO, 'status': status, 'lesson_id': any_lesson.id}
 
 
 def test_student_fio_required(any_lesson: Lesson):

@@ -20,7 +20,7 @@ class StudentRepo():
         result = Student.from_orm(student)
         if student.lesson_id != None:
             result.lesson_id = self.lesson_repo.get_lesson_by_id(
-                student.lesson_id)
+                student.lesson_id).id
 
         return result
 

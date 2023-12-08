@@ -31,16 +31,16 @@ class AttendanceService():
         return self.student_repo.set_status(student)
 
     def set_lesson(self, student_id, lesson_id) -> Student:
-        student_id = self.student_repo.get_student_by_id(student_id)
+        student = self.student_repo.get_student_by_id(student_id)
 
         try:
             lesson = self.lesson_repo.get_lesson_by_id(lesson_id)
         except KeyError:
             raise ValueError
 
-        if student_id.status != Statuses.ATTEND:
+        if student.status != Statuses.ATTEND:
             raise ValueError
 
-        student_id.lesson_id = lesson
-        return self.student_repo.set_lesson(student_id)
+        student.lesson_id = lesson.id
+        return self.student_repo.set_lesson(student)
         

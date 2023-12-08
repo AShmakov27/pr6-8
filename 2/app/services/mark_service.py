@@ -57,6 +57,6 @@ class MarkService():
         if student_id.mark != Marks.SATISFACTORY  :
             raise ValueError
 
-        student_id.lesson_id = lesson
+        student_id.lesson_id = lesson.id
         return self.student_repo.set_lesson(student_id)
         

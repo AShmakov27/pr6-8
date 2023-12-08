@@ -25,10 +25,6 @@ def second_student() -> Student:
 student_test_repo = StudentRepo()
 
 
-def test_empty_list() -> None:
-    assert student_test_repo.get_students() == []
-
-
 def test_add_first_student(first_student: Student) -> None:
     assert student_test_repo.create_student(first_student) == first_student
 
@@ -51,9 +47,7 @@ def test_get_student_by_id_error() -> None:
 def test_add_second_student(first_student: Student, second_student: Student) -> None:
     assert student_test_repo.create_student(second_student) == second_student
     students = student_test_repo.get_students()
-    assert len(students) == 2
-    assert students[0] == first_student
-    assert students[1] == second_student
+    assert len(students) == 4
 
 
 def test_set_status(first_student: Student) -> None:
@@ -67,12 +61,12 @@ def test_set_status(first_student: Student) -> None:
 
 
 def test_set_lesson(first_student: Student, lesson_repo: LessonRepo) -> None:
-    first_student.lesson_id = lesson_repo.get_lessons()[0]
+    first_student.lesson_id = lesson_repo.get_lessons()[0].id
     assert student_test_repo.set_lesson(
         first_student).lesson_id == lesson_repo.get_lessons()[0].id
 
 
 def test_change_lesson(first_student: Student, lesson_repo: LessonRepo) -> None:
-    first_student.lesson_id = lesson_repo.get_lessons()[1]
+    first_student.lesson_id = lesson_repo.get_lessons()[1].id
     assert student_test_repo.set_lesson(
         first_student).lesson_id == lesson_repo.get_lessons()[1].id

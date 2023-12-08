@@ -12,9 +12,11 @@ student_router = APIRouter(prefix='/student', tags=['Student'])
 @student_router.get('/')
 def get_students(mark_service: MarkService = Depends(MarkService)) -> list[Student]:
     students = requests.get("http://attendance_service:80/api/student").json()
+    existing_students = mark_service.get_students()
     for student_info in students:
-        mark_service.create_student(student_info["id"], student_info["FIO"])
-
+        current_student_id = str(student_info["id"])
+        if current_student_id not in [str(student.id) for student in existing_students]:
+            mark_service.create_student(student_info["id"], student_info["FIO"])
     return mark_service.get_students()
 
 @student_router.post('/add')

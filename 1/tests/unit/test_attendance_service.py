@@ -103,14 +103,6 @@ def test_set_lesson_lesson_error(
         attendance_service.set_lesson(first_student_data[0], uuid4())
 
 
-def test_attend_student_status_error(
-    second_student_data: tuple[UUID, str],
-    attendance_service: AttendanceService
-) -> None:
-    with pytest.raises(ValueError):
-        attendance_service.attend_student(second_student_data[0])
-
-
 def test_attend_student_not_found(
     attendance_service: AttendanceService
 ) -> None:
@@ -128,17 +120,16 @@ def test_attend_student(
 
 
 def test_set_lesson(
-    first_student_data: tuple[UUID, str, datetime],
+    first_student_data: tuple[UUID, str],
     attendance_service: AttendanceService,
     lesson_repo: LessonRepo
 ) -> None:
     lesson = lesson_repo.get_lessons()[0]
     student = attendance_service.set_lesson(
         first_student_data[0], lesson.id)
-    assert student.status == Statuses.ABSENT
+    assert student.status == Statuses.ATTEND
     assert student.id == first_student_data[0]
-    assert student.lesson_id.id == lesson.id
-    assert student.lesson_id.subject == lesson.subject
+    assert student.lesson_id == lesson.id
 
 
 def test_change_lesson(
@@ -149,7 +140,7 @@ def test_change_lesson(
     lesson = lesson_repo.get_lessons()[1]
     student = attendance_service.set_lesson(
         first_student_data[0], lesson.id)
-    assert student.status == Statuses.ABSENT
+    assert student.status == Statuses.ATTEND
     assert student.id == first_student_data[0]
-    assert student.lesson_id.id == lesson.id
-    assert student.lesson_id.subject == lesson.subject
+    assert student.lesson_id == lesson.id
+

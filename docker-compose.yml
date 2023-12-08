@@ -8,7 +8,7 @@ services:
   ports: 
     - 8080:80
   environment: 
-    - POSTGRES_URL=postgresql://postgres:1234@192.168.31.148:5432/students_pr6
+    - POSTGRES_URL=postgresql://postgres:1234@192.168.84.131:5432/students_pr6
     - AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/
 
  mark_service: 
@@ -18,5 +18,5 @@ services:
   ports: 
     - 8000:80
   environment: 
-    - POSTGRES_URL=postgresql://postgres:1234@192.168.31.148:5432/marks_pr6
+    - POSTGRES_URL=postgresql://postgres:1234@192.168.84.131:5432/marks_pr6
     - AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/

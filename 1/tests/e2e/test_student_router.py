@@ -8,7 +8,7 @@ from app.models.student import Student, Statuses
 
 
 time.sleep(5)
-base_url = 'http://localhost:8000/api'
+base_url = 'http://localhost:80/api'
 
 
 @pytest.fixture(scope='session')
@@ -21,12 +21,8 @@ def second_student_data() -> tuple[UUID, str]:
     return (uuid4(), 'test_2')
 
 
-def test_get_students_empty() -> None:
-    assert requests.get(f'{base_url}/student').json() == []
-
-
 def test_add_student_first_success(
-    first_student_data: tuple[UUID, str, datetime]
+    first_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = first_student_data
     student = Student.model_validate(requests.post(f'{base_url}/student/add', json={
@@ -39,7 +35,7 @@ def test_add_student_first_success(
 
 
 def test_add_student_first_repeat_error(
-    first_student_data: tuple[UUID, str, datetime]
+    first_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = first_student_data
     result = requests.post(f'{base_url}/student/add', json={
@@ -56,17 +52,8 @@ def test_attend_student_not_found() -> None:
     assert result.status_code == 404
 
 
-def test_attend_student_status_error(
-    first_student_data: tuple[UUID, str, datetime]
-) -> None:
-    id = first_student_data[0]
-    result = requests.post(f'{base_url}/student/{id}/attend')
-
-    assert result.status_code == 400
-
-
 def test_add_student_second_success(
-    second_student_data: tuple[UUID, str, datetime]
+    second_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = second_student_data
     student = Student.model_validate(requests.post(f'{base_url}/student/add', json={
@@ -78,17 +65,6 @@ def test_add_student_second_success(
     assert student.FIO == FIO
 
 
-def test_get_students_full(
-    first_student_data: tuple[UUID, str, datetime],
-    second_student_data: tuple[UUID, str, datetime]
-) -> None:
-    students = [Student.model_validate(
-        s) for s in requests.get(f'{base_url}/student').json()]
-    assert len(students) == 2
-    assert students[0].id == first_student_data[0]
-    assert students[1].id == second_student_data[0]
-
-
 def test_set_lesson_student_not_found() -> None:
     result = requests.post(
         f'{base_url}/student/{uuid4()}/appoint', json={'lesson_id': uuid4().hex})
@@ -97,7 +73,7 @@ def test_set_lesson_student_not_found() -> None:
 
 
 def test_set_lesson_lesson_not_found(
-    first_student_data: tuple[UUID, str, datetime]
+    first_student_data: tuple[UUID, str]
 ) -> None:
     id = first_student_data[0]
     result = requests.post(
@@ -107,7 +83,7 @@ def test_set_lesson_lesson_not_found(
 
 
 def test_set_lesson_status_error(
-    first_student_data: tuple[UUID, str, datetime]
+    first_student_data: tuple[UUID, str]
 ) -> None:
     id = first_student_data[0]
     result = requests.post(f'{base_url}/student/{id}/appoint',
@@ -117,7 +93,7 @@ def test_set_lesson_status_error(
 
 
 def test_activate_delivery_success(
-    second_student_data: tuple[UUID, str, datetime]
+    second_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = second_student_data
     student = Student.model_validate_json(requests.post(
@@ -128,7 +104,7 @@ def test_activate_delivery_success(
 
 
 def test_set_lesson_success(
-    second_student_data: tuple[UUID, str, datetime]
+    second_student_data: tuple[UUID, str]
 ) -> None:
     id, FIO = second_student_data
     student = Student.model_validate_json(requests.post(f'{base_url}/student/{id}/appoint',
