@@ -31,7 +31,7 @@ jobs:
 
       - name: Prepare e2e tests
         run: |
-          sudo docker-compose_test up --build
+          sudo docker-compose -f docker-compose_test.yml up --build
 
       - name: Run e2e tests
         run: |
