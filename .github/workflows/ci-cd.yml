@@ -30,12 +30,18 @@ jobs:
 
       - name: Prepare e2e tests
         run: |
-          sudo docker compose up --build
+          sudo docker stop pg-tests
+          sudo docker build . --file ./1/Dockerfile --tag back-tests
+          sudo docker run -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
+          sleep 5
+          alembic upgrade head
+          sudo docker run -p 8000:80 -e AMQP_URL=amqp://guest:guest123@51.250.26.59:5672/ -e POSTGRES_URL=postgresql://postgres:1234@192.168.84.131:5432/students_pr6 -e PORT=80 -d back-tests
+          sleep 5
 
       - name: Run e2e tests
         run: |
           pytest ./1/tests/e2e
-
+          
   build-and-push-to-dh:
     name: Build and push to DockerHub
     runs-on: ubuntu-latest
@@ -92,4 +98,7 @@ jobs:
           folder-id: ${{ secrets.YC_FOLDER_ID }}
           revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/attendance-service:latest
           revision-service-account-id: ${{ secrets.YC_SA_ID }}
+          revision-env: |
+          AMQP_URL=${{ secrets.ENV_AMQP_URL }}
+          POSTGRES_URL=${{ secrets.ENV_POSTGRES_URL }}
     
