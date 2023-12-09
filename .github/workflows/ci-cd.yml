@@ -34,10 +34,9 @@ jobs:
           sudo docker run --name pg-tests -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
           cd ./1
           rm ./.env
-          echo "AMQP_URL=$AMQP_URL
-          POSTGRES_URL=$POSTGRES_URL
-          PORT=$PORT
-          " > .env
+          echo "AMQP_URL=$AMQP_URL" > .env
+          echo "POSTGRES_URL=$POSTGRES_URL" >> .env
+          echo "PORT=$PORT" >> .env
           sleep 5
           alembic upgrade head
         env:
