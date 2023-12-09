@@ -28,7 +28,7 @@ def second_student() -> Student:
 
 
 def test_empty_list(student_repo: StudentRepo) -> None:
-    assert student_repo.get_deliveries() == []
+    assert student_repo.get_students() == []
 
 
 def test_add_first_student(first_student: Student, student_repo: StudentRepo) -> None:
@@ -74,7 +74,7 @@ def test_set_lesson(first_student: Student, lesson_repo: LessonRepo, student_rep
         first_student).lesson_id == lesson_repo.get_lessons()[0].id
 
 
-def test_change_deliveryman(first_student: Student, lesson_repo: LessonRepo, student_repo: StudentRepo) -> None:
-    first_student.deliveryman = lesson_repo.get_lessons()[1].id
+def test_change_lesson(first_student: Student, lesson_repo: LessonRepo, student_repo: StudentRepo) -> None:
+    first_student.lesson_id = lesson_repo.get_lessons()[1].id
     assert student_repo.set_lesson(
         first_student).lesson_id == lesson_repo.get_lessons()[1].id
