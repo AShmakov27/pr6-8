@@ -37,12 +37,14 @@ jobs:
           rm ./.env
           echo "AMQP_URL=$AMQP_URL
           POSTGRES_URL=$POSTGRES_URL
+          PORT=$PORT
           " > .env
           sleep 5
           alembic upgrade head
         env:
           AMQP_URL: amqp://guest:guest123@51.250.26.59:5672/
           POSTGRES_URL: postgresql://postgres:password@localhost:5432/postgres
+          PORT: 80
 
       - name: Run integration tests
         run: |
